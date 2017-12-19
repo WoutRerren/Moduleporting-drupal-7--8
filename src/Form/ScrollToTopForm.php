@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 class ScrollToTopForm extends ConfigFormBase{
     
     /**
-    *{@inheridoc}
+    *{@inheritdoc}
     */
     public function getFormId(){
         return 'scroll_to_top_form';
@@ -50,7 +50,7 @@ class ScrollToTopForm extends ConfigFormBase{
     '#default_value' => $config->get('scroll_to_top_position'),
   );
   $form['scroll_to_top_bg_color_hover'] = array(
-    '#type' => 'textfield',
+    '#type' => 'color',
     '#title' =>$this-> t('Background color on mouse over.'),
     '#description' =>$this-> t('Button background color on mouse over default #777777'),
     '#default_value' => $config->get('scroll_to_top_bg_color_hover'),
@@ -58,7 +58,7 @@ class ScrollToTopForm extends ConfigFormBase{
     '#maxlength' => 7,
   );
   $form['scroll_to_top_bg_color_out'] = array(
-    '#type' => 'textfield',
+    '#type' => 'color',
     '#title' =>$this-> t('Background color on mouse out.'),
     '#description' =>$this-> t('Button background color on mouse over default #CCCCCC'),
     '#default_value' => $config->get('scroll_to_top_bg_color_out'),
@@ -83,5 +83,31 @@ class ScrollToTopForm extends ConfigFormBase{
     '#markup' => '<div id="scroll-to-top-prev-container">' . $this ->t('Change a setting value to see a preview. "Position" and "enable on admin theme" not included.') . '</div>',
   );
      return parent::buildForm($form,$form_state);
+    }
+    
+/**
+* {@inheritdoc}
+*/
+    public function submitForm(array &$form, FormStateInterface $form_state){
+        
+        parent::submitForm($form,$form_state);
+   
+    $config = $this->config('scroll_to_top.settings');
+        
+    $label = $form_state->getValue('scroll_to_top_label');
+    $position = $form_state->getValue('scroll_to_top_position');
+    $bg_color_hover = $form_state->getValue('scroll_to_top_bg_color_hover');
+    $bg_color_out = $form_state->getValue('scroll_to_top_bg_color_out');
+    $display_text = $form_state->getValue('scroll_to_top_display_text');
+    $enable_admin_theme = $form_state->getValue('scroll_to_top_enable_admin_theme');
+        
+    $config->set('scroll_to_top_label', $label)
+      ->set('scroll_to_top_position', $position)
+      ->set('scroll_to_top_bg_color_hover', $bg_color_hover)
+      ->set('scroll_to_top_bg_color_out', $bg_color_out)
+      ->set('scroll_to_top_display_text', $display_text)
+      ->set('scroll_to_top_enable_admin_theme', $enable_admin_theme)
+      ->save();
+
     }
 }
