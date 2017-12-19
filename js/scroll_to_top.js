@@ -8,10 +8,10 @@
             // append  back to top link top body if it is not
             var exist = jQuery('#back-top').length; // exist = 0 if element doesn't exist
             if (exist == 0) { // this test is for fixing the ajax bug 
-                $("body").append("<p id='back-top'><a href='#top'><span id='button'></span><span id='link'>" + drupalSettings.label + "</span></a></p>");
+                $("body").append("<p id='back-top'><a href='#top'><span id='button'></span><span id='link'>" + drupalSettings.scroll_to_top.label + "</span></a></p>");
             }
             // Preview function
-            $("scroll-to-top-form").on('change','input',function () {
+            $("#scroll-to-top-form").on('change', 'input', function () {
                 // building the style for preview
                 var style = "<style>#scroll-to-top-prev-container #back-top-prev span#button-prev{ background-color:" + $("#edit-scroll-to-top-bg-color-out").val() + ";} #scroll-to-top-prev-container #back-top-prev span#button-prev:hover{ background-color:" + $("#edit-scroll-to-top-bg-color-hover").val() + " }</style>"
                     // building the html content of preview
@@ -27,12 +27,8 @@
             $("#back-top").hide();
             $(function () {
                 $(window).scroll(function () {
-                    // Adding IE8 support
-                    var scrollTop = 0;
-                    if (document.documentElement && document.documentElement.scrollTop) {
-                        scrollTop = document.documentElement.scrollTop;
-                    }
-                    if ($(this).scrollTop() > 100 || scrollTop > 100) {
+                   
+                    if ($(this).scrollTop() > 100) {
                         $('#back-top').fadeIn();
                     } else {
                         $('#back-top').fadeOut();
@@ -40,7 +36,7 @@
                 });
 
                 // scroll body to 0px on click
-                $('#back-top a').on('click',function () {
+                $('#back-top a').on('click', function () {
                     $('body,html').animate({
                         scrollTop: 0
                     }, 800);
@@ -49,4 +45,4 @@
             });
         }
     };
-})(jQuery,Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings);
